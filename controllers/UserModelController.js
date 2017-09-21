@@ -14,19 +14,6 @@ var UserModelController = {
 
     add: function(req, res) {
 
-        console.log("DB qeuery initiated.");
-        /*var userObj = {
-            given_name: "jon" ,
-            family_name: "doe",
-            name: "jon doe",
-            user_id: "google123",
-            skills: [],
-            jobsPostedByThisUser: [] ,
-            jobsThisUserApplied:[]
-            
-        };
-        console.log(userObj);*/
-
         // first, check if the user has already been added
         //UserModel.findOne({user_id: userObj.user_id}, function(err, data) {
         UserModel.findOne({user_id: req.body.user_id}, function(err, data) {
