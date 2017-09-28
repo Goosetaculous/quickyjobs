@@ -1,6 +1,5 @@
 var express = require("express");
 var router = express.Router();
-var path = require("path");
 var UserModelController = require("../controllers/UserModelController.js");
 
 
@@ -16,22 +15,23 @@ router.get("/all", UserModelController.all);
 router.post("/add", UserModelController.add);
 
 // Update an existing user with added post with a speicified id param, using data in req.body 
-router.put("/addpost", UserModelController.addpost);
-
-// add skill to user profile
-router.put("/addskill", UserModelController.addskill);
-
-// remove skill from user profile array
-router.put("/removeskill", UserModelController.removeskill);
+//router.put("/addpost", UserModelController.addpost);
 
 // add skill arry from user profile array
 router.put("/addskillarray", UserModelController.addskillarray);
 
-// // get a specific user using the id in req.params.id
+// get a specific user using the id in req.params.id
 router.get("/:id",UserModelController.getuser );
 
+// get all applied jobs from user
+router.get("/applied/:id", UserModelController.applied);
 
-// // Delete a specific user using the id in req.params.id
+// remove applicant from ID
+router.patch("/removeapplicant", UserModelController.removeApplicant);
+
+router.patch("/apply", UserModelController.apply)
+
+// Delete a specific user using the id in req.params.id
 // router.delete("/user/:account_id", User.<>);
 
 // // collect user info per ID

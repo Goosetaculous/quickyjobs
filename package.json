@@ -4,7 +4,8 @@
   "private": true,
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "NODE_ENV=development node server.js",
+    "dev": "nodemon server.js",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "dependencies": {
@@ -16,6 +17,7 @@
     "jade": "^1.11.0",
     "mongoose": "^4.11.9",
     "morgan": "^1.8.2",
+    "nodemon": "^1.12.1",
     "path": "^0.12.7",
     "serve-favicon": "^2.4.3"
   },

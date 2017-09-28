@@ -15,6 +15,8 @@ import NavigationClose from 'material-ui/svg-icons/navigation/close';
 // import private css
 import "./style.css";
 
+
+
 const style = {
     margin: 12,
 };
@@ -61,9 +63,10 @@ class Homepage extends Component{
             <div>
                 <Toggle label="Logged" defaultToggled={true} onToggle={this.handleChange} labelPosition="right" style={{margin: 20}} />
                 <AppBar
-                    title="Title"
+                    title={<img src="./logo.png/>}
                     className="white-app-bar"
-                    iconElementLeft={<span><FlatButton label="Explorer Jobs" primary={true} /><FlatButton label="Post a Job" primary={true} /></span>}
+                    iconClassNameRight={<img src="./logo.png/>}
+                    iconElementLeft={<span><FlatButton label="About" primary={true} /><FlatButton label="Sign Up" primary={true} /></span>}
                     iconElementRight={this.state.logged ? <Logged /> : <Login />}
                 />
             </div>

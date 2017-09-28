@@ -35,13 +35,11 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "developme
     });
 }
 else {
-  
   console.log("Using local Mongoose");
     let mongoose_db_name = "work4youDB";
     mongoose.connect("mongodb://localhost/" + mongoose_db_name, {
         useMongoClient: true
     });
-
 }
 
 

@@ -11,28 +11,22 @@ var JobSchema = new Schema({
         type: String,
         required: true
     },
-    date: {
-        type: String,
-        required: true
-    },
-    location: {
-        type: String,
-        required: true
-    },
-    price: {
-        type: Number,
-        required: true
-    },
     appliedBy: {
         type: String
     },
     status: {
         type: String
     },
-    skillRequired: {
+    jobType: {
         type: String
     },
     reviewFromJobPoster: {
+        type: String
+    },
+    date:{
+        type:String
+    },
+    location: {
         type: String
     }
 });
@@ -42,3 +36,5 @@ var JobModel = mongoose.model("JobModel", JobSchema);
 module.exports = JobModel;
 
 // Status will: intiated , applied , confirmed , completed 
+
+

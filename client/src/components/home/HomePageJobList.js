@@ -16,7 +16,7 @@ const styles = {
   },
   titleStyle: {
     textalign: 'center',
-    color: 'orange',
+    color: 'white',
     fontSize: '30px',
   },
 };

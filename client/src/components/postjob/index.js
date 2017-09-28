@@ -1,4 +1,5 @@
 import React , { Component } from 'react';
+import  { Redirect, Route } from  'react-router-dom'
 import SideBar from '../../components/shared/sidebar'
 import Wrapper from '../../components/shared/content'
 import DatePicker from 'material-ui/DatePicker';
@@ -8,27 +9,32 @@ import RaisedButton from 'material-ui/RaisedButton';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
+import API from "../../utils/API.js";
+
+
 const styles = {
   customWidth: {
     width: 200,
   },
 };
 
-
-
-
 class PostJob extends Component {
+
 	constructor(props){
+		
 		super(props);
+		this.state ={
+			jobType: "none"
+
+		}
+
+
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleClick = this.handleClick.bind(this);
 	}
 
 	handleClick = (event) => {
-    	event.preventDefault();
-		//alert('Your job was submitted');
-		console.log(this.state);
-		fetch('/job/add', {  
+		/*fetch('/job/add', {
 			method: 'POST',
 			headers: {
 				'Accept': 'application/json',
@@ -36,24 +42,35 @@ class PostJob extends Component {
 			},
 			body: JSON.stringify({
 				'jobName': this.state.jobName,
-				'postedBy': localStorage.getItem('user_id'),
-				'jobSkills': this.state.jobSkills,
+				'postedBy': localStorage.getItem("db_id"),
+				'jobType': this.state.jobType,
 				'jobLocation': this.state.jobLocation,
 				'jobDate': this.state.jobDate,
 				'jobPrice': this.state.jobPrice
 			})
 		  }).then(data => data.json()).then(data => {
-			  console.log(data)
-			  window.location.reload(); // @job/goose, you guys may remove this once your parent state stuff is working
+            this.props.history.push("/profile")
+		  });*/
+		  API.addAJob({
+			'jobName': this.state.jobName,
+			'postedBy': localStorage.getItem("db_id"),
+			'jobType': this.state.jobType,
+			'jobLocation': this.state.jobLocation,
+			'jobDate': this.state.jobDate,
+			'jobPrice': this.state.jobPrice
+		  }).then((res) => {
+			  this.props.history.push("/profile");
 		  });
-		  
   	}
 	
 	handleInputChange = (event) => {
 
 	    const target = event.target;
 	    const value = target.value;
-	    const name = target.name;
+		const name = target.name;
+		
+		console.log("Event: ");
+		console.log(event);
 
 	    this.setState({
 	      [name]: value
@@ -65,9 +82,19 @@ class PostJob extends Component {
 	 // a dedicated on change event handler must be implemented for date picker
 	 // see http://www.material-ui.com/#/components/date-picker for "onChange"
 	 handleDateChange = (event, date) => {
-		 console.log("Date is :");
+		 console.log("Date is");
 		 console.log(date);
 		 this.setState({jobDate: date});
+	 }
+
+	 // a dedicated on change event handler must be implemented for dropdown menu
+	 // see http://www.material-ui.com/#/components/dropdown-menu
+	 handleMenuChange = (event, index, value) => {
+		 console.log("Selected type of job is");
+		 console.log(value);
+		 this.setState({
+		 	value: value
+		 });
 	 }
 
     componentWillMount() {
@@ -123,17 +150,17 @@ class PostJob extends Component {
 						errorText="Required"
 						onChange={this.handleInputChange}
 					/>
-				
-					
-					<TextField
-						name='jobSkills'
-						hintText="Skills"
-						errorText="Required"
-						multiLine={true}
-						rows={5}
-						rowsMax={5}
-						onChange={this.handleInputChange}
-					/><br/>
+
+					<div>
+						<DropDownMenu value={this.state.jobType} onChange={this.handleMenuChange}>
+							<MenuItem value={"none"} primaryText="What kind of job?" />
+							<MenuItem value={"Electic"} primaryText="Electric" />
+							<MenuItem value={"Plumbing"} primaryText="Plumbing" />
+							<MenuItem value={"Gardening"} primaryText="Gardening" />
+							<MenuItem value={"Automotive"} primaryText="Automotive" />
+							<MenuItem value={"Moving"} primaryText="Moving" />
+						</DropDownMenu>
+					</div>
 					
 					<RaisedButton label="Submit" primary={true}  onClick={(event) => this.handleClick(event)}/>
 				</div>

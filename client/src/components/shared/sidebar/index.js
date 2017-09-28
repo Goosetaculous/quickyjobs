@@ -24,13 +24,10 @@ class SideBar extends Component{
                         subtitle={this.props.family_name}
                          avatar={this.props.picture}
                     />
-                    <CardTitle title="Expert in:" />
-                    <CardText>
-                       Moving,sleeping
-                    </CardText>
                     <CardActions>
-                        <Link to="/postjob"><FlatButton label="Post Jobs"/></Link>
-                        <FlatButton label="All Jobs" />
+                        <Link to="/jobs"><FlatButton label="All Jobs"/></Link>
+                        <Link to="/postjob"><FlatButton label="Post A Job"/></Link>
+                        <Link to="/profile"><FlatButton label="Manage Jobs and Skills"/></Link>
                         <FlatButton label="Log Out" onClick={()=>auth.logout()} />
                     </CardActions>s
                 </Card>

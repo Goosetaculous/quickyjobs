@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
-import FlatButton from 'material-ui/FlatButton';
-
-
+// Components
 import Profile from './Profile'
 import AppliedJobs from './AppliedJobs.js';
 import RecommendedJobs from './RecommendedJobs.js';
 import JobsPostedByMe from './JobsPostedByMe.js';
 import ConfirmedJobs from './ConfirmedJobs.js';
 import Reviews from './Reviews.js'
+
+import API from '../../../utils/API'
+
 
 // import card from shared
 import Cardsv2 from '../../shared/cardsv2'
@@ -28,7 +29,10 @@ class ProfileTabs extends Component {
     constructor() {
         super();
         this.state = {
-          recommendedCards: {}
+            recommendedCards: {},
+            appliedJobs:[],
+            selectedIndex: -1,
+            recommendedJobs: []
         }
     };
 
@@ -43,39 +47,82 @@ class ProfileTabs extends Component {
         ));
     };
 
-    // test3 = (test3)=>{
-    // {this.props.passfunction("p1")}
-    yo = () => {
-        console.log("FUNCTION CALLED YO")
-        this.props.passfunction("p1")
+    //================================================
+    // Function to call User Applied Data
+    //================================================
+
+    getAppliedJobs = () => {
+        console.log("==================Job Applied Start====================")
+        console.log(this.props._id)
+        API.getAppliedJobs(this.props._id).then((res)=>{
+            console.log("RES Applied: ",res)
+            console.log("==================Job Applied END====================")
+            this.setState({appliedJobs: res.data})
+        }).catch((err)=>{
+            console.log("ERR ",err)
+        })   
     }
+
+
+    //================================================
+    // Function to call User Recommended Data
+    //================================================
+
+   getRecommendedJobs = () => {
+        console.log("==================Recommeneded Job Start====================")
+        console.log(this.props.skills)
+        API.getRecommendedJobs(this.props._id,this.props.skills).then((res)=>{
+            console.log("RES Recommended: ",res)
+            console.log("==================Recommended JOb END====================")
+            this.setState({recommendedJobs: res.data})
+        }).catch((err)=>{
+            console.log("ERR ",err)
+        })   
+    }
+
 
 
     render(){
         {this.props.jobsdata}
-        
         return(
             
-            <Tabs>
+            <Tabs initialSelectedIndex = {-1}>
                 <Tab label="My Skills" >
                     <div>
-                       <Profile/>
-                        <FlatButton label="Default" onClick={this.yo} />
+                       <Profile
+                           skills={this.props.skills}
+                           _id ={this.props._id}
+                           setSkills={this.props.setSkills}
+                       />
+                        {/*<FlatButton label="Default" onClick={()=>this.props.f1("TEST")} />*/}
                     </div>
                 </Tab>
-                <Tab label="Applied Jobs" >
+                <Tab 
+                    onActive={this.getAppliedJobs}
+                    label="Jobs I Applied" 
+                >
                     <div>
-                        <h2 style={styles.headline}>Applied Jobs</h2>
-                        <AppliedJobs />
+                        <h2 style={styles.headline}>Jobs I Applied</h2>
+                        <AppliedJobs  
+                            appliedJobs={this.state.appliedJobs}
+                            getAppliedJobs={this.getAppliedJobs}
+                            user_id={this.props._id}
+                         />
                     </div>
                 </Tab>
-                <Tab label="Recommended Jobs" >
+                <Tab
+                    onActive={this.getRecommendedJobs} 
+                    label="Look For A Job" >
                     <div>
                         <div>
-                            <h2 style={styles.headline}>Recommended jobs</h2>
+                            <h2 style={styles.headline}>Look For A Job</h2>
                         </div>
                         <div>
-                           <RecommendedJobs />
+                           <RecommendedJobs 
+                                user_id={this.props._id}
+                                recommendedJobs={this.state.recommendedJobs}
+                                getRecommendedJobs={this.getRecommendedJobs}
+                           />
                         </div>
                     </div>
                 </Tab>

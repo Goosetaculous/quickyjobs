@@ -40,6 +40,7 @@ export default class Auth {
                 history.replace('/');
                 console.log(err);
                 alert(`Error: ${err.error}. Check the console for further details.`);
+                
             }
         });
     }
@@ -56,7 +57,10 @@ export default class Auth {
         // Non authO native code. Added to relay user data to db
         console.log(authResult.idTokenPayload)
         localStorage.setItem('user_id', authResult.idTokenPayload.sub);
-        API.addUser(authResult.idTokenPayload);
+        API.addUser(authResult.idTokenPayload).then((res)=>{
+            localStorage.setItem('db_id', res.data._id )
+            }
+        );
 
 
         // navigate to the home route
@@ -86,7 +90,8 @@ export default class Auth {
         localStorage.removeItem('access_token');
         localStorage.removeItem('id_token');
         localStorage.removeItem('expires_at');
-        localStorage.removeItem('user_id')
+        localStorage.removeItem('user_id');
+        localStorage.removeItem('db_id');
         this.userProfile = null;
         // navigate to the home route
         history.replace('/');

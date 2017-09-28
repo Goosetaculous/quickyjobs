@@ -16,6 +16,8 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 // import RaisedButton from 'material-ui/RaisedButton';
 
+//import logo
+//import "./logo.png"
 // Import of auth
 import Auth from '../../../Auth/Auth';
 
@@ -29,6 +31,10 @@ const auth = new Auth();
 const style = {
     margin: 12,
 };
+
+const image = require('./logo.png')
+console.log(image); // '/build/12as7f9asfasgasg.jpg'
+
 
 class Login extends Component {
     static muiName = 'FlatButton';
@@ -89,18 +95,16 @@ class Navtest extends Component{
         const { isAuthenticated } = auth;
         return(
             <div>
-              
                 <AppBar
-                    title="Title"
                     className="white-app-bar"
-                    iconElementLeft={<span><FlatButton label="Explorer Jobs" primary={true} /><FlatButton label="Post a Job" primary={true} /></span>}
+                    style={{backgroundColor: 'transparent'}}
+                    iconElementLeft={<img className='logo' src={image} />}
                     iconElementRight={ <Login />}
                 />
+                
             </div>
         )
     }
 }
-
-
 
 export default Navtest

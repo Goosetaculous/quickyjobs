@@ -1,18 +1,11 @@
 import React, { Component } from 'react'
-import Wrapper from '../../shared/content'
-
-//import ChipInput from 'material-ui-chip-input'
 import Checkbox from 'material-ui/Checkbox';
+import FlatButton from 'material-ui/FlatButton';
 
 // import Routes/API
 import API from '../../../utils/API'
 
-
-
-
-const AUTO = ['Mechanical','Electrical','Body Work','Installation']
-const HOUSE = ['Construction','Plumping','Electrical','Maintenance']
-const GENERAL = ['Moving','Nanny','Modeling','Event','Adult']
+const SKILLS = ['Electric','Plumbing','Gardening','Automotive','Moving']
 
 const styles = {
     block: {
@@ -27,30 +20,20 @@ class Profile extends Component {
     constructor(){
         super()
         this.state = {
+            user_id: localStorage.getItem("user_id"),
             checkedValues: []
         }
-
     }
 
-    importSkillArray(){
-        let user_id = localStorage.getItem("user_id");
-        let skillarray = this.state.checkedValues;
-
-        const skillObject = {
-            "user_id": user_id,
-            "skillarray": skillarray
-        }
-
-        console.log("===================")
-        console.log(skillObject);
-        console.log("===================")
-
-        API.addSkillArray(skillObject);
+    componentWillReceiveProps(nextProps){
+        nextProps.skills.length > 0 ?
+        this.setState({
+            checkedValues: nextProps.skills
+        }):null
     }
 
-    handleCheck(skill,TYPE) {
-        let checkedSkill =  `${skill}-${TYPE}`
-
+    handleCheck(skill) {
+        let checkedSkill =  `${skill}`
         this.setState(state => ({
             checkedValues: state.checkedValues.includes(checkedSkill)
                 ? this.state.checkedValues.filter(c => c !== checkedSkill)
@@ -59,44 +42,41 @@ class Profile extends Component {
 
     }
 
-    renderCheckbox(skill,TYPE){
-
+    renderCheckbox(skill){
         return(
-
             <Checkbox
                 label={skill}
-                key={`${TYPE}${skill}`}
-                onCheck={() => this.handleCheck(skill,TYPE)}
-
+                key={`${skill}`}
+                onCheck={() => this.handleCheck(skill)}
+                defaultChecked={this.state.checkedValues.includes(skill)}
                 style={styles.checkbox}
             />
             )
+    }
 
+    handleSave(){
+        API.addSkillArray({
+            user_id : this.props._id,
+            skillarray: this.state.checkedValues
+        })
+        this.props.setSkills(this.state.checkedValues)
     }
 
     render(){
         return(
             <div className="container" style={{width:"80%"}}>
-                {this.importSkillArray()}
-              
                 <div style={styles.block}>
-                    <h5>Auto</h5>
+                    <h5>Select the job types you are interested in</h5>
                     {
-                        AUTO.map((data,index)=>this.renderCheckbox(data,"AUTO"))
+                        SKILLS.map((data,index)=>this.renderCheckbox(data))
                     }
+                    <FlatButton
+                        label={"Save"}
+                        primary={true}
+                        onClick={()=>this.handleSave()}
+                    />
                 </div>
-                <div style={styles.block}>
-                    <h5>HOUSE</h5>
-                    {
-                        HOUSE.map((data,index)=>this.renderCheckbox(data,"HOUSE"))
-                    }
-                </div>
-                <div style={styles.block}>
-                    <h5>GENERAL</h5>
-                    {
-                        GENERAL.map((data,index)=>this.renderCheckbox(data,"GENERAL"))
-                    }
-                </div>
+
             </div>
         )
     }

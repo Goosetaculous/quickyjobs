@@ -2,13 +2,21 @@ import React, { Component } from 'react'
 import TextField from 'material-ui/TextField'
 import SideBar from '../../components/shared/sidebar'
 import Wrapper from '../../components/shared/content'
-import PopulateCards from '../shared/cards'
+import PopulateCards from '../shared/1buttoncards/'
 import FlatButton from 'material-ui/FlatButton';
+
+//API
+
+import API from '../../utils/API'
+
 
 
 class Jobs extends Component{
     constructor(){
         super()
+        this.state={
+            jobs:[]
+        }
     }
     componentWillMount() {
         this.setState({ profile: {} });
@@ -21,6 +29,15 @@ class Jobs extends Component{
             this.setState({ profile: userProfile });
         }
     }
+
+    componentDidMount(){
+        API.getAllJobs(localStorage.getItem("db_id")).then((res)=>{
+            this.setState({
+                jobs: res.data
+            })
+        })
+    }
+
     render(){
         const { profile } = this.state;
         return(
@@ -30,7 +47,7 @@ class Jobs extends Component{
                     <div style={{textAlign: "center"}}>
                         <TextField hintText="Job Keywords"/><FlatButton label="Search" primary={true}/>
                         <br/>
-                        <PopulateCards/>
+                        <PopulateCards jobs={this.state.jobs}/>
                     </div>
                 </Wrapper>
             </div>

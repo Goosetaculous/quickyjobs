@@ -1,14 +1,19 @@
 .footer {
     text-align: center;
-    color: grey;
+    background-color: transparent !important;
     padding: 10px 0px 20px 0px;
 }
 
 .footer-link {
     font-size: 15px;
     margin: 5px;
+
 }
 
 .copyright-statement {
     font-size: 12px;
+}
+
+a {
+	 color: black;
 }

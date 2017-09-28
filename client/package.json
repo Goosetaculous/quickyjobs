@@ -5,11 +5,11 @@
   "dependencies": {
     "auth0-js": "^8.10.1",
     "axios": "^0.16.2",
-    "body-parser": "^1.18.1",
+    "body-parser": "^1.18.2",
     "material-ui": "^0.19.2",
     "material-ui-chip-input": "^0.17.2",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.12",
     "redux": "^3.7.2"

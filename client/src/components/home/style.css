@@ -1,14 +1,21 @@
+/*@import {
+  
+  src: url('https://fonts.googleapis.com/css?family=Open+Sans|Pacifico')
+}
+
+https://static.pexels.com/photos/301703/pexels-photo-301703.jpeg(originalpic)
+*/
 .hook-line {
-    background: url("http://www.logiudicecustomknives.com/knifeshop/images/IMG_5625-1800.jpg") no-repeat center center;
-    margin: 20px 0px 20px 0px;
-    background-size: contain;
+    background: url("https://static.pexels.com/photos/301703/pexels-photo-301703.jpeg") no-repeat center center;
+    margin: 50px 0px 0px 0px;
+    background-size: 100%;
     height: 500px;
     text-align: center;
-    font-size: 100px;
-    padding: 200px 0px 0px 0px;
-    color: red;
-    font-family: 'Abel', sans-serif;
-    font-weight: bold;
+    font-size: 65px;
+    padding: 300px 0px 0px 0px;
+    color: gray;
+    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: bolder;
 }
 
 .job-list {
@@ -19,3 +26,24 @@
     font-weight: bold;
     
 }
+
+.about-button {
+    height: 100px;
+    width: 200px;
+    border-radius: 3px;
+    border: 1px solid black;
+    background: green;
+    color: white;
+    transition: width 2s;
+
+}
+
+.about-button:hover {
+    width: 300px;
+    height: 400px;
+    font-size:50px;
+}
+
+/*font-family: 'Pacifico', cursive;
+  font-family: 'Open Sans', sans-serif;
+  */
